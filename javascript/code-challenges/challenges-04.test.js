@@ -113,7 +113,11 @@ For example, ['Alphabet', 'alphabet', 'carrot', 'Zebra'] is correctly sorted, an
 ------------------------------------------------------------------------------------------------ */
 
 const alphabetizeBetter = (arr) => {
-  // Solution code here...
+  return arr.sort((a, b) => {
+    if (a.toLowerCase() < b.toLowerCase()) return -1;
+    if (a.toLowerCase() > b.toLowerCase()) return 1;
+    return 0;
+  });
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -123,7 +127,11 @@ Write a function named sortByLength that takes in an array of strings and return
 ------------------------------------------------------------------------------------------------ */
 
 const sortByLength = (arr) => {
-  // Solution code here...
+  return arr.sort((a, b) => {
+    if (a.length < b.length) return -1;
+    if (a.length > b.length) return 1;
+    return 0;
+  });
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -135,7 +143,11 @@ For example, [1, 14, 0.2, -281, 54782] is only correctly sorted in that order.
 ------------------------------------------------------------------------------------------------ */
 
 const sortNumbersByLength = (arr) => {
-  // Solution code here...
+  return arr.sort((a, b) => {
+    if (a.toString().length < b.toString().length) return -1;
+    if (a.toString().length > b.toString().length) return 1;
+    return 0;
+  });
 };
 
 /*-----------------------------------------------------------------------------------------------
@@ -297,7 +309,7 @@ describe("Testing challenge 6", () => {
   });
 });
 
-xdescribe("Testing challenge 7", () => {
+describe("Testing challenge 7", () => {
   test("It should alphabetize without regard to capitalization", () => {
     expect(
       alphabetizeBetter(["Alice", "apple", "alert", "Average"])
@@ -310,7 +322,7 @@ xdescribe("Testing challenge 7", () => {
   });
 });
 
-xdescribe("Testing challenge 8", () => {
+describe("Testing challenge 8", () => {
   test("It should sort strings by length", () => {
     const ans = sortByLength(["alphabet", "Zebra", "Alphabet", "carrot"]);
     expect(ans.slice(0, 2)).toStrictEqual(["Zebra", "carrot"]);
@@ -323,7 +335,7 @@ xdescribe("Testing challenge 8", () => {
   });
 });
 
-xdescribe("Testing challenge 9", () => {
+describe("Testing challenge 9", () => {
   test("It should sort numbers by their length", () => {
     expect(sortNumbersByLength([10, 2.8, 1, -47.75])).toStrictEqual([
       1, 10, 2.8, -47.75,
