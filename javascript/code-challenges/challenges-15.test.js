@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 1 - Review
@@ -11,8 +11,10 @@ Write a function named screenForNames that takes in an array of strings and uses
 ------------------------------------------------------------------------------------------------ */
 
 const screenForNames = (arr) => {
-  // Solution code here...
-}
+  return arr.filter((e) => {
+    return /^\b(Mr.|Mrs.|Ms.|Dr.)\s\b/.test(e);
+  });
+};
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 2
@@ -23,7 +25,9 @@ For example, ['apple', 'banana', 'MacGyver'] returns ['Apple', 'Banana', 'MacGyv
 ------------------------------------------------------------------------------------------------ */
 
 const toTitleCase = (arr) => {
-  // Solution code here...
+  return arr.map((e) => {
+    return e.charAt(0).toUpperCase() + e.slice(1);
+  });
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -36,69 +40,78 @@ The names should be combined into a single string with each character name separ
 For example, "Lando Calrisian - Boba Fett - Princess Amidala".
 ------------------------------------------------------------------------------------------------ */
 
-let starWarsData = [{
-  name: 'Luke Skywalker',
-  height: '172',
-  mass: '77',
-  hair_color: 'blond',
-  skin_color: 'fair',
-  eye_color: 'blue',
-  birth_year: '19BBY',
-  gender: 'male',
-},
-{
-  name: 'C-3PO',
-  height: '167',
-  mass: '75',
-  hair_color: 'n/a',
-  skin_color: 'gold',
-  eye_color: 'yellow',
-  birth_year: '112BBY',
-  gender: 'n/a'
-},
-{
-  name: 'R2-D2',
-  height: '96',
-  mass: '32',
-  hair_color: 'n/a',
-  skin_color: 'white, blue',
-  eye_color: 'red',
-  birth_year: '33BBY',
-  gender: 'n/a'
-},
-{
-  name: 'Darth Vader',
-  height: '202',
-  mass: '136',
-  hair_color: 'none',
-  skin_color: 'white',
-  eye_color: 'yellow',
-  birth_year: '41.9BBY',
-  gender: 'male'
-},
-{
-  name: 'Leia Organa',
-  height: '150',
-  mass: '49',
-  hair_color: 'brown',
-  skin_color: 'light',
-  eye_color: 'brown',
-  birth_year: '19BBY',
-  gender: 'female'
-},
-{
-  name: 'Pex Kylar',
-  height: '180',
-  mass: '190',
-  hair_color: 'orange',
-  skin_color: 'brown',
-  eye_color: 'none',
-  birth_year: '27BBY',
-  gender: 'n/a'
-}];
+let starWarsData = [
+  {
+    name: "Luke Skywalker",
+    height: "172",
+    mass: "77",
+    hair_color: "blond",
+    skin_color: "fair",
+    eye_color: "blue",
+    birth_year: "19BBY",
+    gender: "male",
+  },
+  {
+    name: "C-3PO",
+    height: "167",
+    mass: "75",
+    hair_color: "n/a",
+    skin_color: "gold",
+    eye_color: "yellow",
+    birth_year: "112BBY",
+    gender: "n/a",
+  },
+  {
+    name: "R2-D2",
+    height: "96",
+    mass: "32",
+    hair_color: "n/a",
+    skin_color: "white, blue",
+    eye_color: "red",
+    birth_year: "33BBY",
+    gender: "n/a",
+  },
+  {
+    name: "Darth Vader",
+    height: "202",
+    mass: "136",
+    hair_color: "none",
+    skin_color: "white",
+    eye_color: "yellow",
+    birth_year: "41.9BBY",
+    gender: "male",
+  },
+  {
+    name: "Leia Organa",
+    height: "150",
+    mass: "49",
+    hair_color: "brown",
+    skin_color: "light",
+    eye_color: "brown",
+    birth_year: "19BBY",
+    gender: "female",
+  },
+  {
+    name: "Pex Kylar",
+    height: "180",
+    mass: "190",
+    hair_color: "orange",
+    skin_color: "brown",
+    eye_color: "none",
+    birth_year: "27BBY",
+    gender: "n/a",
+  },
+];
 
 let biggerThanLuke = (arr) => {
-  // Solution code here...
+  let newStr = "";
+  let newArr = arr.filter((e) => {
+    return Number(e.mass) > 77;
+  });
+  newArr.map((e) => {
+    newStr += `${newStr == "" ? "" : " - "}${e.name}`;
+  });
+  return newStr;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -116,11 +129,15 @@ This data could be sorted by name or price.
 ------------------------------------------------------------------------------------------------ */
 
 const sortBy = (property, arr) => {
-  // Solution code here...
+  return arr.sort((a, b) => {
+    if (a[property] > b[property]) return 1;
+    if (a[property] < b[property]) return -1;
+    return 0;
+  });
 };
 
 /* ------------------------------------------------------------------------------------------------
-CHALLENGE 5 
+CHALLENGE 5
 
 Write a function that determines if a given URL is secure, beginning with https://
 
@@ -132,11 +149,11 @@ https://secure.com returns true because the URL is secure
 https:/missingslash.org returns false because the URL is malformed
 ------------------------------------------------------------------------------------------------ */
 const isSecure = (url) => {
-  // Solution code here...
+  return /^https:\/\//.test(url);
 };
 
 /* ------------------------------------------------------------------------------------------------
-CHALLENGE 6 
+CHALLENGE 6
 
 Write a function named detectTicTacToeWin that accepts a two-dimensional array of strings. Each string is guaranteed to be either "X", "O" or an empty string. Your function should check to see if any row, column, or either diagonal direction has three matching "X" or "O" symbols (non-empty strings), three-in-a-line.
 
@@ -155,7 +172,41 @@ Here is a sample board:
 ------------------------------------------------------------------------------------------------ */
 
 const detectTicTacToeWin = (board) => {
-  // Solution code here...
+  let c0 = "";
+  let c1 = "";
+  let c2 = "";
+  for (let i = 0; i < 3; i++) {
+    if (board[i].join("") == "XXX" || board[i].join("") == "OOO") return true;
+    c0 += board[i][0];
+    c1 += board[i][1];
+    c2 += board[i][2];
+  }
+  if (
+    c0 == "XXX" ||
+    c0 == "OOO" ||
+    c1 == "XXX" ||
+    c1 == "OOO" ||
+    c2 == "XXX" ||
+    c2 == "OOO"
+  )
+    return true;
+  let tl = board[0][0];
+  let m = board[1][1];
+  let br = board[2][2];
+  let tr = board[0][2];
+  let bl = board[2][0];
+  let downRight = tl + m + br;
+  let upRight = bl + m + tr;
+
+  if (
+    downRight == "XXX" ||
+    downRight == "OOO" ||
+    upRight == "XXX" ||
+    upRight == "OOO"
+  )
+    return true;
+
+  return false;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -169,78 +220,120 @@ Run your tests from the console: jest challenge-14.test.js
 
 ------------------------------------------------------------------------------------------------ */
 
-describe('Testing challenge 1', () => {
-  test('It should return a list of names', () => {
-    const names = ['Mr. Brown', ' Ms. Red', 'Dr. Blue', 'Mrs.', '', 'Ms. Black', 'dr. Green', 'Mrs. Orange', 'Purple', 'Mr.  Pink'];
-    expect(screenForNames(names)).toStrictEqual(['Mr. Brown', 'Dr. Blue', 'Ms. Black', 'Mrs. Orange']);
+describe("Testing challenge 1", () => {
+  test("It should return a list of names", () => {
+    const names = [
+      "Mr. Brown",
+      " Ms. Red",
+      "Dr. Blue",
+      "Mrs.",
+      "",
+      "Ms. Black",
+      "dr. Green",
+      "Mrs. Orange",
+      "Purple",
+      "Mr.  Pink",
+    ];
+    expect(screenForNames(names)).toStrictEqual([
+      "Mr. Brown",
+      "Dr. Blue",
+      "Ms. Black",
+      "Mrs. Orange",
+    ]);
   });
 });
 
-describe('Testing challenge 2', () => {
-  test('It should convert each word to title case', () => {
-    const words = ['apple', 'banana', 'MacGyver'];
-    expect(toTitleCase(words)).toStrictEqual(['Apple', 'Banana', 'MacGyver']);
+describe("Testing challenge 2", () => {
+  test("It should convert each word to title case", () => {
+    const words = ["apple", "banana", "MacGyver"];
+    expect(toTitleCase(words)).toStrictEqual(["Apple", "Banana", "MacGyver"]);
 
     expect(toTitleCase([])).toStrictEqual([]);
   });
 });
 
-describe('Testing challenge 3', () => {
-  test('It should return only characters that are bigger than Luke', () => {
-    expect(biggerThanLuke(starWarsData)).toStrictEqual('Darth Vader - Pex Kylar');
-    expect(biggerThanLuke([])).toStrictEqual('');
+describe("Testing challenge 3", () => {
+  test("It should return only characters that are bigger than Luke", () => {
+    expect(biggerThanLuke(starWarsData)).toStrictEqual(
+      "Darth Vader - Pex Kylar"
+    );
+    expect(biggerThanLuke([])).toStrictEqual("");
   });
 });
 
-describe('Testing challenge 4', () => {
-  test('It should sort items by a price', () => {
-
-    expect(sortBy('price', [
-      { name: 'Sweatshirt', price: 45 },
-      { name: 'Bookmark', price: 2.50 },
-      { name: 'Tote bag', price: 15 }
-    ])).toStrictEqual([
-      { name: 'Bookmark', price: 2.50 },
-      { name: 'Tote bag', price: 15 },
-      { name: 'Sweatshirt', price: 45 },
-    ]);
-
-  });
-
-  test('It should sort items by name', () => {
-
-    expect(sortBy('name', [
-      { name: 'Sweatshirt', price: 45 },
-      { name: 'Bookmark', price: 2.50 },
-      { name: 'Tote bag', price: 15 }
-    ])).toStrictEqual([
-      { name: 'Bookmark', price: 2.50 },
-      { name: 'Sweatshirt', price: 45 },
-      { name: 'Tote bag', price: 15 },
+describe("Testing challenge 4", () => {
+  test("It should sort items by a price", () => {
+    expect(
+      sortBy("price", [
+        { name: "Sweatshirt", price: 45 },
+        { name: "Bookmark", price: 2.5 },
+        { name: "Tote bag", price: 15 },
+      ])
+    ).toStrictEqual([
+      { name: "Bookmark", price: 2.5 },
+      { name: "Tote bag", price: 15 },
+      { name: "Sweatshirt", price: 45 },
     ]);
   });
-});
 
-describe('Testing challenge 5', () => {
-  test('It should check if url is https', () => {
-
-    expect(isSecure('http://www.insecure.com')).toBe(false);
-    expect(isSecure('https://secure.com')).toBe(true);
-    expect(isSecure('https:/missingslash.org')).toBe(false);
+  test("It should sort items by name", () => {
+    expect(
+      sortBy("name", [
+        { name: "Sweatshirt", price: 45 },
+        { name: "Bookmark", price: 2.5 },
+        { name: "Tote bag", price: 15 },
+      ])
+    ).toStrictEqual([
+      { name: "Bookmark", price: 2.5 },
+      { name: "Sweatshirt", price: 45 },
+      { name: "Tote bag", price: 15 },
+    ]);
   });
 });
 
-describe('Testing challenge 6', () => {
-  test('It should return true if there are three in a row', () => {
-    expect(detectTicTacToeWin([['X', '', 'O'], ['X', 'O', ''], ['X', 'O', 'X']])).toStrictEqual(true);
-    expect(detectTicTacToeWin([['O', '', 'X'], ['X', 'O', 'X'], ['X', '', 'O']])).toStrictEqual(true);
+describe("Testing challenge 5", () => {
+  test("It should check if url is https", () => {
+    expect(isSecure("http://www.insecure.com")).toBe(false);
+    expect(isSecure("https://secure.com")).toBe(true);
+    expect(isSecure("https:/missingslash.org")).toBe(false);
+  });
+});
+
+describe("Testing challenge 6", () => {
+  test("It should return true if there are three in a row", () => {
+    expect(
+      detectTicTacToeWin([
+        ["X", "", "O"],
+        ["X", "O", ""],
+        ["X", "O", "X"],
+      ])
+    ).toStrictEqual(true);
+    expect(
+      detectTicTacToeWin([
+        ["O", "", "X"],
+        ["X", "O", "X"],
+        ["X", "", "O"],
+      ])
+    ).toStrictEqual(true);
   });
 
-  test('It should return false if there are not three in a row', () => {
-    expect(detectTicTacToeWin([['X', '', 'O'], ['O', 'O', ''], ['X', 'O', 'X']])).toStrictEqual(false);
+  test("It should return false if there are not three in a row", () => {
+    expect(
+      detectTicTacToeWin([
+        ["X", "", "O"],
+        ["O", "O", ""],
+        ["X", "O", "X"],
+      ])
+    ).toStrictEqual(false);
   });
 
-  test('It should not treat empty 3 in row as winner', () => {
-    expect(detectTicTacToeWin([['', '', ''], ['O', 'O', ''], ['X', 'O', 'X']])).toEqual(false);
+  test("It should not treat empty 3 in row as winner", () => {
+    expect(
+      detectTicTacToeWin([
+        ["", "", ""],
+        ["O", "O", ""],
+        ["X", "O", "X"],
+      ])
+    ).toEqual(false);
   });
 });
